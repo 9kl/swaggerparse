@@ -60,7 +60,8 @@ def to_path_url_method_name(value):
     :return:
     """
     parts = value.split('/')
-    method_name = to_camel_case(parts[-1])
+    new_parts = '_'.join(parts[4:])
+    method_name = to_camel_case(new_parts)
     return method_name
 
 

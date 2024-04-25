@@ -24,7 +24,7 @@ def gen_java_entity():
         return f'{schema.name}.java'
 
     def filter_schema(schema: SwaggerSchema):
-        return 'Monitor' in schema.name and 'Query' not in schema.name
+        return 'DamSafetyRsvrWarm' in schema.name and 'Query' not in schema.name
 
     swagger_doc = load_swagger_url(swagger_url)
     api.gen_schema_template_file(swagger_doc, 'java_entity.jinja2', _out_dir,
@@ -48,11 +48,11 @@ def gen_java_entity_query():
                                  **{'root_name': root_name, 'app_name': app_name, 'package_name': package_name})
 
 
-def gen_android_api():
+def gen_android_api(path_uri_prefix: str, class_name: str):
     api = SwaggerTemplateRender(template_dir, __filters__)
 
     def filter_path(path: SwaggerPath):
-        return '/api/monitor/monitor_canal/' in path.uri
+        return path_uri_prefix in path.uri
 
     def filter_schema(schema: SwaggerSchema):
         return True
@@ -64,7 +64,8 @@ def gen_android_api():
         t = api.get_template('android_service.jinja2')
         d = {'schemas': schemas, 'paths': paths, 'request_schemas': request_schemas,
              'response_schemas': response_schemas}
-        d.update({'root_name': root_name, 'app_name': app_name, 'package_name': package_name, 'class_name': 'MonitorCanal'})
+        d.update({'root_name': root_name, 'app_name': app_name,
+                  'package_name': package_name, 'class_name': class_name})
 
         out_file = os.path.join(out_dir, file_name)
         with open(out_file, 'w', encoding='utf-8') as f:
@@ -77,7 +78,8 @@ def gen_android_api():
         t = api.get_template('android_repo.jinja2')
         d = {'schemas': schemas, 'paths': paths, 'request_schemas': request_schemas,
              'response_schemas': response_schemas}
-        d.update({'root_name': root_name, 'app_name': app_name, 'package_name': package_name, 'class_name': 'MonitorCanal'})
+        d.update({'root_name': root_name, 'app_name': app_name,
+                  'package_name': package_name, 'class_name': class_name})
 
         out_file = os.path.join(out_dir, file_name)
         with open(out_file, 'w', encoding='utf-8') as f:
@@ -104,16 +106,18 @@ def gen_android_api():
                      os.path.join(root_dir, 'entitys'))
 
     _gen_android_service(wrapper.schemas, wrapper.paths, wrapper.request_schemas, wrapper.response_schemas,
-                         os.path.join(root_dir, 'services'), 'MonitorCanalService.java')
+                         os.path.join(root_dir, 'services'), f'{class_name}Service.java')
 
     _gen_android_repo(wrapper.schemas, wrapper.paths, wrapper.request_schemas, wrapper.response_schemas,
-                      os.path.join(root_dir, 'repos'), 'MonitorCanalRepo.java')
+                      os.path.join(root_dir, 'repos'), f'{class_name}Repo.java')
 
 
 if __name__ == '__main__':
-    lst = ['/api/monitor/monitor_canal/', '/api/monitor/monitor_canal/', '/api/monitor/monitor_canal/', '/api/monitor/monitor_canal/']
+    """
+    lst = [('/api/monitor/monitor_canal/', 'MonitorCanal'), ('/api/monitor/monitor_station/', 'MonitorStation')]
     for item in lst:
-        gen_android_api()
+        gen_android_api(item[0], item[1])
+    """
 
-    # gen_java_entity()
+    gen_java_entity()
     # gen_java_entity_query()
