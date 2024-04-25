@@ -113,7 +113,7 @@ def gen_android_api():
 if __name__ == '__main__':
     lst = ['/api/monitor/monitor_canal/', '/api/monitor/monitor_canal/', '/api/monitor/monitor_canal/', '/api/monitor/monitor_canal/']
     for item in lst:
-        gen_android_api(item)
+        gen_android_api()
 
     # gen_java_entity()
     # gen_java_entity_query()
