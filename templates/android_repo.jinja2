@@ -1,4 +1,4 @@
-package {{ root_name }}.{{ app_name }}.{{ package_name }}.services;
+package {{ root_name }}.{{ app_name }}.{{ package_name }}.repos;
 
 import androidx.lifecycle.LiveData;
 import com.github.leonardoxh.livedatacalladapter.Resource;
@@ -13,10 +13,10 @@ import {{ root_name }}.{{ app_name }}.base.{{ app_name|PascalCase }}ApiClient;
 import {{ root_name }}.{{ app_name }}.{{ package_name }}.services.{{ class_name }}Service;
 
 {% for schema in request_schemas -%}
-import {{ root_name }}.{{ app_name }}.monitor.entitys.query.{{ schema.name }};
+import {{ root_name }}.{{ app_name }}.{{ package_name }}.entitys.query.{{ schema.name }};
 {% endfor %}
 {% for schema in response_schemas -%}
-import {{ root_name }}.{{ app_name }}.monitor.entitys.{{ schema.name }};
+import {{ root_name }}.{{ app_name }}.{{ package_name }}.entitys.{{ schema.name }};
 {% endfor %}
 
 public class {{ class_name }}Repo {

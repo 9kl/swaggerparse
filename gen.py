@@ -10,10 +10,10 @@ base_dir = os.path.dirname(__file__)
 template_dir = os.path.join(base_dir, 'templates')
 root_dir = os.path.join(base_dir, 'output')
 
-swagger_url = 'http://192.168.102.40:9900/api/doc/swagger.json'
+swagger_url = 'http://192.168.50.136:9900/api/doc/swagger.json'
 root_name = 'cn.linkeddt.wisdomwatersystem'
 app_name = 'irrms'
-package_name = 'monitor'
+package_name = 'patrol'
 
 
 def gen_java_entity():
@@ -113,11 +113,24 @@ def gen_android_api(path_uri_prefix: str, class_name: str):
 
 
 if __name__ == '__main__':
-    """
-    lst = [('/api/monitor/monitor_canal/', 'MonitorCanal'), ('/api/monitor/monitor_station/', 'MonitorStation')]
-    for item in lst:
-        gen_android_api(item[0], item[1])
-    """
+    patrol_table_lst = [('/api/patrol/patrol_category/', 'PatrolCategory'),
+                        ('/api/patrol/patrol_object/', 'PatrolObject'),
+                        ('/api/patrol/patrol_item/', 'PatrolItem'),
+                        ('/api/patrol/patrol_plan/', 'PatrolPlan'),
+                        ('/api/patrol/patrol_inspection/', 'PatrolInspection'),
+                        ('/api/patrol/patrol_inspection_track/', 'PatrolInspectionTrack'),
+                        ('/api/patrol/patrol_report/', 'PatrolReport'),
+                        ('/api/patrol/patrol_report_transfer/', 'PatrolReportTransfer'),
+                        ('/api/patrol/patrol_report_file/', 'PatrolReportFile'),
+                        ('/api/patrol/patrol_report_solve/', 'PatrolReportSolve'),
+                        ('/api/patrol/patrol_report_solve_file/', 'PatrolReportSolveFile')]
 
-    gen_java_entity()
-    # gen_java_entity_query()
+    monitor_table_lst = [('/api/monitor/monitor_category/', 'MonitorCategory'),
+                         ('/api/monitor/monitor_object/', 'MonitorObject'),
+                         ('/api/monitor/monitor_item/', 'MonitorItem'),
+                         ('/api/monitor/monitor_plan/', 'MonitorPlan'),
+                         ('/api/monitor/monitor_inspection/', 'MonitorInspection'),
+                         ('/api/monitor/monitor_inspection_track/', 'MonitorInspectionTrack'), ]
+
+    for item in patrol_table_lst:
+        gen_android_api(item[0], item[1])
