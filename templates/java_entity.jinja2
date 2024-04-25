@@ -1,0 +1,63 @@
+package {{ root_name }}.{{ app_name }}.{{ package_name }}.entitys;
+
+public class {{ schema.name }} {
+{% for field in fields -%}
+    {% if field.field_type == 'ref' %}
+    /**
+    * {{ field.field_desc }}
+    */
+    private {{ field.inner_type }} {{ field.field_name }};
+    {% elif field.field_type == 'array' %}
+    /**
+    * {{ field.field_desc }}
+    */
+    private {{ field.inner_type|JavaClass }}[] {{ field.field_name }};
+    {% elif field.field_type == 'object' %}
+    /**
+    * {{ field.field_desc }}
+    */
+    private {{ field.field_type|JavaClass }}[] {{ field.field_name }};
+    {% else %}
+    /**
+    * {{ field.field_desc }}
+    */
+    private {{ field.field_type|JavaClass }} {{ field.field_name }};
+    {% endif -%}
+{% endfor %}
+
+{% for field in fields -%}
+    {% if field.field_type == 'ref' %}
+    public {{ field.inner_type }} get{{ field.field_name|PascalCase }}() {
+        return {{ field.field_name }};
+    }
+
+    public void set{{ field.field_name|PascalCase }}({{ field.inner_type }} {{ field.field_name|CamelCase }}) {
+        this.{{ field.field_name }} = {{ field.field_name }};
+    }
+    {% elif field.field_type == 'array' %}
+    public {{ field.inner_type|JavaClass }}[] get{{ field.field_name|PascalCase }}() {
+        return {{ field.field_name }};
+    }
+
+    public void set{{ field.field_name|PascalCase }}({{ field.inner_type|JavaClass }}[] {{ field.field_name|CamelCase }}) {
+        this.{{ field.field_name }} = {{ field.field_name }};
+    }
+    {% elif field.field_type == 'object' %}
+    public {{ field.field_type|JavaClass }}[] get{{ field.field_name|PascalCase }}() {
+        return {{ field.field_name }};
+    }
+
+    public void set{{ field.field_name|PascalCase }}({{ field.field_type|JavaClass }}[] {{ field.field_name|CamelCase }}) {
+        this.{{ field.field_name }} = {{ field.field_name }};
+    }
+    {% else %}
+    public {{ field.field_type|JavaClass }} get{{ field.field_name|PascalCase }}() {
+        return {{ field.field_name }};
+    }
+
+    public void set{{ field.field_name|PascalCase }}({{ field.field_type|JavaClass }} {{ field.field_name|CamelCase }}) {
+        this.{{ field.field_name }} = {{ field.field_name|CamelCase }};
+    }
+    {% endif -%}
+{% endfor %}
+}

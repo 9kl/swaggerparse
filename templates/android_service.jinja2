@@ -1,0 +1,30 @@
+package {{ root_name }}.{{ app_name }}.{{ package_name }}.services;
+
+import androidx.lifecycle.LiveData;
+import com.github.leonardoxh.livedatacalladapter.Resource;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+import {{ root_name }}.{{ app_name }}.base.NullQuery;
+import {{ root_name }}.{{ app_name }}.base.Req;
+import {{ root_name }}.{{ app_name }}.base.Rsp;
+import {{ root_name }}.{{ app_name }}.base.RspPage;
+import {{ root_name }}.{{ app_name }}.base.RspList;
+{% for schema in request_schemas -%}
+import {{ root_name }}.{{ app_name }}.{{ package_name }}.entitys.query.{{ schema.name }};
+{% endfor %}
+{% for schema in response_schemas -%}
+import {{ root_name }}.{{ app_name }}.{{ package_name }}.entitys.{{ schema.name }};
+{% endfor %}
+
+public interface {{ class_name }}Service {
+    {% for path in paths %}
+    /**
+     * {{ path.c.summary }}
+     *
+     * @param query Req<{% if path.response_type == 'base' %}{{ path.body_schema|JavaClass }}{% else %}{{ path.body_schema }}{% endif %}>
+     * @return {% if path.response_type == 'one' %}Rsp<{{ path.data_schema }}>{% elif path.response_type == 'many' %}RspList<{{ path.data_schema }}>{% elif path.response_type == 'page' %}RspPage<{{ path.data_schema }}>{% else %}Rsp<{{ path.data_schema|JavaClass }}>{% endif %}
+     */
+    @POST("{{ path.c.uri }}")
+    LiveData<Resource<{% if path.response_type == 'one' %}Rsp<{{ path.data_schema }}>{% elif path.response_type == 'many' %}RspList<{{ path.data_schema }}>{% elif path.response_type == 'page' %}RspPage<{{ path.data_schema }}>{% else %}Rsp<{{ path.data_schema|JavaClass }}>{% endif %}>> {{ path.c.uri|UrlToMethodName }}(@Body Req<{% if path.response_type == 'base' %}{{ path.body_schema|JavaClass }}{% else %}{{ path.body_schema }}{% endif %}> query);
+    {% endfor %}
+}
