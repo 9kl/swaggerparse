@@ -13,10 +13,10 @@ root_dir = os.path.join(base_dir, 'output')
 swagger_url = 'http://192.168.50.136:9900/api/doc/swagger.json'
 root_name = 'cn.linkeddt.wisdomwatersystem'
 app_name = 'irrms'
-package_name = 'patrol'
+package_name = 'monitor'
 
 
-def gen_java_entity():
+def gen_java_entity(schema_name_list):
     api = SwaggerTemplateRender(template_dir, __filters__)
     _out_dir = os.path.join(root_dir, 'entitys')
 
@@ -24,7 +24,7 @@ def gen_java_entity():
         return f'{schema.name}.java'
 
     def filter_schema(schema: SwaggerSchema):
-        return 'DamSafetyRsvrWarm' in schema.name and 'Query' not in schema.name
+        return schema.name in schema_name_list
 
     swagger_doc = load_swagger_url(swagger_url)
     api.gen_schema_template_file(swagger_doc, 'java_entity.jinja2', _out_dir,
@@ -112,7 +112,7 @@ def gen_android_api(path_uri_prefix: str, class_name: str):
                       os.path.join(root_dir, 'repos'), f'{class_name}Repo.java')
 
 
-if __name__ == '__main__':
+def batch_gen_android_repo():
     patrol_table_lst = [('/api/patrol/patrol_category/', 'PatrolCategory'),
                         ('/api/patrol/patrol_object/', 'PatrolObject'),
                         ('/api/patrol/patrol_item/', 'PatrolItem'),
@@ -125,12 +125,28 @@ if __name__ == '__main__':
                         ('/api/patrol/patrol_report_solve/', 'PatrolReportSolve'),
                         ('/api/patrol/patrol_report_solve_file/', 'PatrolReportSolveFile')]
 
-    monitor_table_lst = [('/api/monitor/monitor_category/', 'MonitorCategory'),
-                         ('/api/monitor/monitor_object/', 'MonitorObject'),
-                         ('/api/monitor/monitor_item/', 'MonitorItem'),
-                         ('/api/monitor/monitor_plan/', 'MonitorPlan'),
-                         ('/api/monitor/monitor_inspection/', 'MonitorInspection'),
-                         ('/api/monitor/monitor_inspection_track/', 'MonitorInspectionTrack'), ]
+    monitor_table_lst = [('/api/monitor/monitor_station/', 'MonitorStation'),
+                         ('/api/monitor/monitor_rain/', 'MonitorRain'),
+                         ('/api/monitor/monitor_canal/', 'MonitorCanal'),
+                         ('/api/monitor/monitor_rsvr/', 'MonitorRsvr'),
+                         ('/api/monitor/monitor_wdpstat/', 'MonitorWdpstat'),
+                         ('/api/monitor/monitor_gate/', 'MonitorGate'),
+                         ('/api/monitor/monitor_meteorology/', 'MonitorMeteorology'),
+                         ('/api/monitor/monitor_waterquality/', 'MonitorWaterquality'),
+                         ('/api/monitor/monitor_gnss/', 'MonitorGnss'),
+                         ('/api/monitor/monitor_tilt/', 'MonitorTilt'),
+                         ('/api/monitor/monitor_pressure/', 'MonitorPressure'),
+                         ('/api/monitor/monitor_flow/', 'MonitorFlow'),
+                         ('/api/monitor/warn_record/', 'WarnRecord')]
 
-    for item in patrol_table_lst:
+    for item in monitor_table_lst:
         gen_android_api(item[0], item[1])
+
+    gen_java_entity(['MonitorCanalGroupStation', 'MonitorRsvrDownwaterCapacity',
+                     'MonitorRsvrDownwaterOverview', 'WarnRecordAll'])
+
+
+if __name__ == '__main__':
+    # batch_gen_android_repo()
+    gen_java_entity(['MonitorCanalGroupStation', 'MonitorRsvrDownwaterCapacity',
+                     'MonitorRsvrDownwaterOverview', 'WarnRecordAll'])

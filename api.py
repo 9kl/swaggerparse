@@ -123,7 +123,6 @@ class SwaggerTemplateRender(object):
 
             with open(out_file, 'w', encoding='utf-8') as f:
                 f.write(t.render(d))
-            print(out_file)
 
     def gen_singtemplate_file(self, swagger_doc: SwaggerDocument, template_name: str, out_file,
                               filter_schema_func, filter_path_func, **kwargs):

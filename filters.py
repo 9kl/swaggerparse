@@ -62,6 +62,8 @@ def to_path_url_method_name(value):
     parts = value.split('/')
     new_parts = '_'.join(parts[4:])
     method_name = to_camel_case(new_parts)
+    if method_name == 'new':
+        method_name = 'getNew'
     return method_name
 
 
