@@ -127,26 +127,45 @@ def batch_gen_android_repo():
 
     monitor_table_lst = [('/api/monitor/monitor_station/', 'MonitorStation'),
                          ('/api/monitor/monitor_rain/', 'MonitorRain'),
+                         ('/api/monitor/monitor_rain_new/', 'MonitorRainNew'),
+                         ('/api/monitor/monitor_rain_hour/', 'MonitorRainHour'),
+                         ('/api/monitor/monitor_rain_day/', 'MonitorRainDay'),
+                         ('/api/monitor/monitor_rain_month/', 'MonitorRainMonth'),
                          ('/api/monitor/monitor_canal/', 'MonitorCanal'),
+                         ('/api/monitor/monitor_canal_new/', 'MonitorCanalNew'),
                          ('/api/monitor/monitor_rsvr/', 'MonitorRsvr'),
+                         ('/api/monitor/monitor_rsvr_new/', 'MonitorRsvrNew'),
                          ('/api/monitor/monitor_wdpstat/', 'MonitorWdpstat'),
+                         ('/api/monitor/monitor_wdpstat_new/', 'MonitorWdpstatNew'),
+                         ('/api/monitor/monitor_wdpstat_hour/', 'MonitorWdpstatHour'),
+                         ('/api/monitor/monitor_wdpstat_day/', 'MonitorWdpstatDay'),
+                         ('/api/monitor/monitor_wdpstat_month/', 'MonitorWdpstatMonth'),
                          ('/api/monitor/monitor_gate/', 'MonitorGate'),
+                         ('/api/monitor/monitor_gate_new/', 'MonitorGateNew'),
+                         ('/api/monitor/monitor_gate_log/', 'MonitorGateLog'),
                          ('/api/monitor/monitor_meteorology/', 'MonitorMeteorology'),
+                         ('/api/monitor/monitor_meteorology_new/', 'MonitorMeteorologyNew'),
                          ('/api/monitor/monitor_waterquality/', 'MonitorWaterquality'),
+                         ('/api/monitor/monitor_waterquality_new/', 'MonitorWaterqualityNew'),
                          ('/api/monitor/monitor_gnss/', 'MonitorGnss'),
+                         ('/api/monitor/monitor_gnss_new/', 'MonitorGnssNew'),
                          ('/api/monitor/monitor_tilt/', 'MonitorTilt'),
+                         ('/api/monitor/monitor_tilt_new/', 'MonitorTiltNew'),
                          ('/api/monitor/monitor_pressure/', 'MonitorPressure'),
+                         ('/api/monitor/monitor_pressure_new/', 'MonitorPressureNew'),
                          ('/api/monitor/monitor_flow/', 'MonitorFlow'),
+                         ('/api/monitor/monitor_flow_new/', 'MonitorFlowNew'),
                          ('/api/monitor/warn_record/', 'WarnRecord')]
 
     for item in monitor_table_lst:
         gen_android_api(item[0], item[1])
 
     gen_java_entity(['MonitorCanalGroupStation', 'MonitorRsvrDownwaterCapacity',
-                     'MonitorRsvrDownwaterOverview', 'WarnRecordAll'])
+                     'MonitorRsvrDownwaterOverview', 'WarnRecordAll', 'WaterqualityQualified'])
 
 
 if __name__ == '__main__':
     # batch_gen_android_repo()
+
     gen_java_entity(['MonitorCanalGroupStation', 'MonitorRsvrDownwaterCapacity',
-                     'MonitorRsvrDownwaterOverview', 'WarnRecordAll'])
+                     'MonitorRsvrDownwaterOverview', 'WarnRecordAll', 'WaterqualityQualified'])
