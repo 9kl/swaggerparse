@@ -10,10 +10,10 @@ base_dir = os.path.dirname(__file__)
 template_dir = os.path.join(base_dir, 'templates')
 root_dir = os.path.join(base_dir, 'output')
 
-swagger_url = 'http://192.168.50.136:9900/api/doc/swagger.json'
+swagger_url = 'http://192.168.102.40:9900/api/doc/swagger.json'
 root_name = 'cn.linkeddt.wisdomwatersystem'
 app_name = 'irrms'
-package_name = 'monitor'
+package_name = 'patrol'
 
 
 def gen_java_entity(schema_name_list):
@@ -157,15 +157,16 @@ def batch_gen_android_repo():
                          ('/api/monitor/monitor_flow_new/', 'MonitorFlowNew'),
                          ('/api/monitor/warn_record/', 'WarnRecord')]
 
-    for item in monitor_table_lst:
+    for item in patrol_table_lst:
         gen_android_api(item[0], item[1])
 
+    gen_java_entity(['PatrolReportWrapper', 'PatrolReport', 'PatrolReportFile', 'MainPatrolItem', 'PatrolItem',
+                     'UploadFileResult'])
+    """
     gen_java_entity(['MonitorCanalGroupStation', 'MonitorRsvrDownwaterCapacity',
                      'MonitorRsvrDownwaterOverview', 'WarnRecordAll', 'WaterqualityQualified'])
+    """
 
 
 if __name__ == '__main__':
-    # batch_gen_android_repo()
-
-    gen_java_entity(['MonitorCanalGroupStation', 'MonitorRsvrDownwaterCapacity',
-                     'MonitorRsvrDownwaterOverview', 'WarnRecordAll', 'WaterqualityQualified'])
+    batch_gen_android_repo()

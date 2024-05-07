@@ -29,31 +29,31 @@ public class {{ schema.name }} extends BaseQuery<{{ schema.name }}>{
 {% for field in fields -%}
     {% if field.field_type == 'ref' %}
     public {{ field.inner_type }} get{{ field.field_name|PascalCase }}() {
-        return {{ field.field_name }};
+        return this.{{ field.field_name }};
     }
 
     public void set{{ field.field_name|PascalCase }}({{ field.inner_type }} {{ field.field_name|CamelCase }}) {
-        this.{{ field.field_name }} = {{ field.field_name }};
+        this.{{ field.field_name }} = {{ field.field_name|CamelCase }};
     }
     {% elif field.field_type == 'array' %}
     public {{ field.inner_type|JavaClass }}[] get{{ field.field_name|PascalCase }}() {
-        return {{ field.field_name }};
+        return this.{{ field.field_name }};
     }
 
     public void set{{ field.field_name|PascalCase }}({{ field.inner_type|JavaClass }}[] {{ field.field_name|CamelCase }}) {
-        this.{{ field.field_name }} = {{ field.field_name }};
+        this.{{ field.field_name }} = {{ field.field_name|CamelCase }};
     }
     {% elif field.field_type == 'object' %}
     public {{ field.field_type|JavaClass }}[] get{{ field.field_name|PascalCase }}() {
-        return {{ field.field_name }};
+        return this.{{ field.field_name }};
     }
 
     public void set{{ field.field_name|PascalCase }}({{ field.field_type|JavaClass }}[] {{ field.field_name|CamelCase }}) {
-        this.{{ field.field_name }} = {{ field.field_name }};
+        this.{{ field.field_name }} = {{ field.field_name|CamelCase }};
     }
     {% else %}
     public {{ field.field_type|JavaClass }} get{{ field.field_name|PascalCase }}() {
-        return {{ field.field_name }};
+        return this.{{ field.field_name }};
     }
 
     public void set{{ field.field_name|PascalCase }}({{ field.field_type|JavaClass }} {{ field.field_name|CamelCase }}) {
