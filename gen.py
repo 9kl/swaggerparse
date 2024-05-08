@@ -125,6 +125,8 @@ def batch_gen_android_repo():
                         ('/api/patrol/patrol_report_solve/', 'PatrolReportSolve'),
                         ('/api/patrol/patrol_report_solve_file/', 'PatrolReportSolveFile')]
 
+    monitor_table_lst1 = [('/api/monitor/monitor_wdpstat_new/page', 'MonitorWdpstatNew'), ]
+
     monitor_table_lst = [('/api/monitor/monitor_station/', 'MonitorStation'),
                          ('/api/monitor/monitor_rain/', 'MonitorRain'),
                          ('/api/monitor/monitor_rain_new/', 'MonitorRainNew'),
