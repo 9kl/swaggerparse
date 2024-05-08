@@ -135,7 +135,7 @@ class ArrayField(FieldBase):
 
 class UnknownField(FieldBase):
     def __init__(self, field_name, field_required, field_props):
-        super(UnknownField, self).__init__(field_name, 'unknownfield', field_required, field_props)
+        super(UnknownField, self).__init__(field_name, 'unknown', field_required, field_props)
 
 
 class RefField(FieldBase):

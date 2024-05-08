@@ -18,6 +18,12 @@ class ResponseDataTypeEnum(Enum):
     BASE = "base"
 
 
+class RequestDataTypeEnum(Enum):
+    ONE = "one"
+    MANY = "many"
+    BASE = "base"
+
+
 class SwaggerPathWrapper(object):
     def __init__(self, paths, schemas, request_schemas, response_schemas):
         self.paths = paths
@@ -50,6 +56,8 @@ def load_path_wrapper(swagger_doc: SwaggerDocument,
 
     # 响应类型（one=一条数据、many=多条、page=分页）
     response_data_type = ResponseDataTypeEnum.BASE
+    # 请求类型
+    request_data_type = RequestDataTypeEnum.ONE
     paths = []
     for path in swagger_doc.parse_path():
         if filter_path_func(path):
@@ -58,8 +66,10 @@ def load_path_wrapper(swagger_doc: SwaggerDocument,
                     if field.field_type in ('ref', 'array',):
                         request_schemas.add([schema for schema in schemas if schema.name == field.inner_type][0])
                         request_body_schema = field.inner_type
+                        request_data_type = RequestDataTypeEnum.ONE
                     else:
                         request_body_schema = field.field_type
+                        request_data_type = RequestDataTypeEnum.BASE
                     break
 
             exists_total_field = False
@@ -83,7 +93,7 @@ def load_path_wrapper(swagger_doc: SwaggerDocument,
                 response_data_type = ResponseDataTypeEnum.PAGE
 
             paths.append({'c': path, 'body_schema': request_body_schema, 'data_schema': response_data_schema,
-                          'response_type': response_data_type.value})
+                          'response_type': response_data_type.value, 'request_type': request_data_type.value})
 
     return SwaggerPathWrapper(paths, schemas, request_schemas, response_schemas)
 

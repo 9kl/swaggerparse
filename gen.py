@@ -166,7 +166,7 @@ def batch_gen_android_repo():
     """
 
     gen_java_entity(['MonitorCanalGroupStation', 'MonitorRsvrDownwaterCapacity',
-                     'MonitorRsvrDownwaterOverview', 'WarnRecordAll', 'WaterqualityQualified'])
+                     'MonitorRsvrDownwaterOverview', 'WarnRecordAll', 'WaterqualityQualified', 'MonitorGateNewAll'])
 
 
 if __name__ == '__main__':

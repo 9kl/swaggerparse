@@ -5,7 +5,7 @@ def to_java_class(value):
     if value in ('number',):
         return 'Double'
 
-    if value in ('string',):
+    if value in ('string', 'unknown',):
         return 'String'
 
     if value in ('integer',):

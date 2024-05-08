@@ -56,6 +56,7 @@ class SwaggerSchema(object):
                     yield ObjectField(field_name, required, field_props)
                 if field_type == 'array':
                     yield ArrayField(field_name, required, field_props)
+                yield UnknownField(field_name, required, field_props)
             elif '$ref' in field_props:
                 yield RefField(field_name, required, field_props)
             elif 'allOf' in field_props:

@@ -28,10 +28,10 @@ public class {{ class_name }}Repo {
     /**
      * {{ path.c.summary }}
      *
-     * @param query Req<{% if path.response_type == 'base' %}{{ path.body_schema|JavaClass }}{% else %}{{ path.body_schema }}{% endif %}>
+     * @param query Req<{% if path.request_type == 'base' %}{{ path.body_schema|JavaClass }}{% else %}{{ path.body_schema }}{% endif %}>
      * @return {% if path.response_type == 'one' %}Rsp<{{ path.data_schema }}>{% elif path.response_type == 'many' %}RspList<{{ path.data_schema }}>{% elif path.response_type == 'page' %}RspPage<{{ path.data_schema }}>{% else %}Rsp<{{ path.data_schema|JavaClass }}>{% endif %}
      */
-    public LiveData<Resource<{% if path.response_type == 'one' %}Rsp<{{ path.data_schema }}>{% elif path.response_type == 'many' %}RspList<{{ path.data_schema }}>{% elif path.response_type == 'page' %}RspPage<{{ path.data_schema }}>{% else %}Rsp<{{ path.data_schema|JavaClass }}>{% endif %}>> {{ path.c.uri|UrlToMethodName }}(Req<{% if path.response_type == 'base' %}{{ path.body_schema|JavaClass }}{% else %}{{ path.body_schema }}{% endif %}> query) {
+    public LiveData<Resource<{% if path.response_type == 'one' %}Rsp<{{ path.data_schema }}>{% elif path.response_type == 'many' %}RspList<{{ path.data_schema }}>{% elif path.response_type == 'page' %}RspPage<{{ path.data_schema }}>{% else %}Rsp<{{ path.data_schema|JavaClass }}>{% endif %}>> {{ path.c.uri|UrlToMethodName }}(Req<{% if path.request_type == 'base' %}{{ path.body_schema|JavaClass }}{% else %}{{ path.body_schema }}{% endif %}> query) {
         return service.{{ path.c.uri|UrlToMethodName }}(query);
     }
     {% endfor %}
