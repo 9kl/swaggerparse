@@ -5,7 +5,7 @@ def to_java_class(value):
     if value in ('number',):
         return 'Double'
 
-    if value in ('string', 'object',):
+    if value in ('string',):
         return 'String'
 
     if value in ('integer',):
@@ -13,6 +13,9 @@ def to_java_class(value):
 
     if value in ('boolean',):
         return 'Boolean'
+
+    if value in ('object',):
+        return 'JsonObject'
 
     return value
 

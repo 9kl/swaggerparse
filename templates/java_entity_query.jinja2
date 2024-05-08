@@ -1,5 +1,7 @@
 package {{ root_name }}.{{ app_name }}.{{ package_name }}.entitys.query;
 import {{ root_name }}.{{ app_name }}.base.BaseQuery;
+import com.google.gson.JsonObject;
+import java.util.List;
 
 public class {{ schema.name }} extends BaseQuery<{{ schema.name }}>{
 {% for field in fields -%}
@@ -12,12 +14,12 @@ public class {{ schema.name }} extends BaseQuery<{{ schema.name }}>{
     /**
     * {{ field.field_desc }}
     */
-    private {{ field.inner_type|JavaClass }}[] {{ field.field_name }};
+    private List<{{ field.inner_type|JavaClass }}> {{ field.field_name }};
     {% elif field.field_type == 'object' %}
     /**
     * {{ field.field_desc }}
     */
-    private {{ field.field_type|JavaClass }}[] {{ field.field_name }};
+    private {{ field.field_type|JavaClass }} {{ field.field_name }};
     {% else %}
     /**
     * {{ field.field_desc }}
@@ -36,19 +38,19 @@ public class {{ schema.name }} extends BaseQuery<{{ schema.name }}>{
         this.{{ field.field_name }} = {{ field.field_name|CamelCase }};
     }
     {% elif field.field_type == 'array' %}
-    public {{ field.inner_type|JavaClass }}[] get{{ field.field_name|PascalCase }}() {
+    public List<{{ field.inner_type|JavaClass }}> get{{ field.field_name|PascalCase }}() {
         return this.{{ field.field_name }};
     }
 
-    public void set{{ field.field_name|PascalCase }}({{ field.inner_type|JavaClass }}[] {{ field.field_name|CamelCase }}) {
+    public void set{{ field.field_name|PascalCase }}(List<{{ field.inner_type|JavaClass }}> {{ field.field_name|CamelCase }}) {
         this.{{ field.field_name }} = {{ field.field_name|CamelCase }};
     }
     {% elif field.field_type == 'object' %}
-    public {{ field.field_type|JavaClass }}[] get{{ field.field_name|PascalCase }}() {
+    public {{ field.field_type|JavaClass }} get{{ field.field_name|PascalCase }}() {
         return this.{{ field.field_name }};
     }
 
-    public void set{{ field.field_name|PascalCase }}({{ field.field_type|JavaClass }}[] {{ field.field_name|CamelCase }}) {
+    public void set{{ field.field_name|PascalCase }}({{ field.field_type|JavaClass }} {{ field.field_name|CamelCase }}) {
         this.{{ field.field_name }} = {{ field.field_name|CamelCase }};
     }
     {% else %}
