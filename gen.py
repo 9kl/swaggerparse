@@ -10,7 +10,7 @@ base_dir = os.path.dirname(__file__)
 template_dir = os.path.join(base_dir, 'templates')
 root_dir = os.path.join(base_dir, 'output')
 
-swagger_url = 'http://192.168.50.136:9900/api/doc/swagger.json'
+swagger_url = 'http://192.168.102.40:9900/api/doc/swagger.json'
 root_name = 'cn.linkeddt.wisdomwatersystem'
 app_name = 'irrms'
 package_name = 'monitor'
@@ -125,7 +125,9 @@ def batch_gen_android_repo():
                         ('/api/patrol/patrol_report_solve/', 'PatrolReportSolve'),
                         ('/api/patrol/patrol_report_solve_file/', 'PatrolReportSolveFile')]
 
-    monitor_table_lst1 = [('/api/monitor/monitor_wdpstat_new/page', 'MonitorWdpstatNew'), ]
+    monitor_table_lst1 = [('/api/monitor/monitor_gnss/excel', 'MonitorGnss'), ]
+
+    sys_book_lst = [('/api/sys/sys_book/', 'SysBook')]
 
     monitor_table_lst = [('/api/monitor/monitor_station/', 'MonitorStation'),
                          ('/api/monitor/monitor_rain/', 'MonitorRain'),
