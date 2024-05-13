@@ -8,6 +8,7 @@ import {{ root_name }}.{{ app_name }}.base.Req;
 import {{ root_name }}.{{ app_name }}.base.Rsp;
 import {{ root_name }}.{{ app_name }}.base.RspPage;
 import {{ root_name }}.{{ app_name }}.base.RspList;
+import {{ root_name }}.{{ app_name }}.base.NullQuery;
 {% for schema in request_schemas -%}
 import {{ root_name }}.{{ app_name }}.{{ package_name }}.entitys.query.{{ schema.name }};
 {% endfor %}
