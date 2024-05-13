@@ -10,7 +10,7 @@ base_dir = os.path.dirname(__file__)
 template_dir = os.path.join(base_dir, 'templates')
 root_dir = os.path.join(base_dir, 'output')
 
-swagger_url = 'http://192.168.50.136:9900/api/doc/swagger.json'
+swagger_url = 'http://192.168.102.37:9900/api/doc/swagger.json'
 root_name = 'cn.linkeddt.wisdomwatersystem'
 app_name = 'irrms'
 package_name = 'monitor'
