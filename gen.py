@@ -14,7 +14,7 @@ swagger_url = 'http://192.168.102.37:9900/api/doc/swagger.json'
 # swagger_url = 'http://192.168.102.40:9900/api/doc/swagger.json'
 root_name = 'cn.linkeddt.wisdomwatersystem'
 app_name = 'irrms'
-package_name = 'patrol'
+package_name = 'system'
 
 
 def gen_java_entity(schema_name_list):
@@ -128,7 +128,11 @@ def batch_gen_android_repo():
 
     monitor_table_lst1 = [('/api/monitor/monitor_gnss/excel', 'MonitorGnss'), ]
 
-    sys_book_lst = [('/api/sys/sys_book/', 'SysBook')]
+    sys_table_lst = [('/api/sys/sys_book/', 'SysBook'), ('/api/sys/sys_app_update/', 'SysAppUpdate'), ('/api/sae/sae_people/', 'SaePeople'),]
+
+    news_table_lst = [('/api/news/news_business_system/', 'NewsBusinessSystem'),
+                      ('/api/news/news_catalog/', 'NewsCatalog'),
+                      ('/api/news/news_publish_article/', 'NewsPublishArticle')]
 
     monitor_table_lst = [('/api/monitor/monitor_station/', 'MonitorStation'),
                          ('/api/monitor/monitor_rain/', 'MonitorRain'),
@@ -162,13 +166,13 @@ def batch_gen_android_repo():
                          ('/api/monitor/monitor_flow_new/', 'MonitorFlowNew'),
                          ('/api/monitor/warn_record/', 'WarnRecord')]
 
-    for item in patrol_table_lst:
+    for item in sys_table_lst:
         gen_android_api(item[0], item[1])
 
+    """
     gen_java_entity(['PatrolReportWrapper', 'PatrolReport', 'PatrolReportFile', 'MainPatrolItem', 'PatrolItem',
                      'UploadFileResult'])
-
-    """
+                     
     gen_java_entity(['MonitorCanalGroupStation', 'MonitorRsvrDownwaterCapacity',
                      'MonitorRsvrDownwaterOverview', 'WarnRecordAll', 'WaterqualityQualified', 'MonitorGateNewAll'])
     """
