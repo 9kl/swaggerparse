@@ -10,10 +10,11 @@ base_dir = os.path.dirname(__file__)
 template_dir = os.path.join(base_dir, 'templates')
 root_dir = os.path.join(base_dir, 'output')
 
-swagger_url = 'http://192.168.50.136:9900/api/doc/swagger.json'
+swagger_url = 'http://192.168.102.37:9900/api/doc/swagger.json'
+# swagger_url = 'http://192.168.102.40:9900/api/doc/swagger.json'
 root_name = 'cn.linkeddt.wisdomwatersystem'
 app_name = 'irrms'
-package_name = 'video'
+package_name = 'system'
 
 
 def gen_java_entity(schema_name_list):
@@ -112,81 +113,99 @@ def gen_android_api(path_uri_prefix: str, class_name: str):
                       os.path.join(root_dir, 'repos'), f'{class_name}Repo.java')
 
 
-def batch_gen_android_repo():
-    patrol_table_lst = [('/api/patrol/patrol_category/', 'PatrolCategory'),
-                        ('/api/patrol/patrol_object/', 'PatrolObject'),
-                        ('/api/patrol/patrol_item/', 'PatrolItem'),
-                        ('/api/patrol/patrol_plan/', 'PatrolPlan'),
-                        ('/api/patrol/patrol_inspection/', 'PatrolInspection'),
-                        ('/api/patrol/patrol_inspection_track/', 'PatrolInspectionTrack'),
-                        ('/api/patrol/patrol_report/', 'PatrolReport'),
-                        ('/api/patrol/patrol_report_transfer/', 'PatrolReportTransfer'),
-                        ('/api/patrol/patrol_report_file/', 'PatrolReportFile'),
-                        ('/api/patrol/patrol_report_solve/', 'PatrolReportSolve'),
-                        ('/api/patrol/patrol_report_solve_file/', 'PatrolReportSolveFile')]
+def batch_gen_patrol_table():
+    table_lst = [('/api/patrol/patrol_category/', 'PatrolCategory'),
+                 ('/api/patrol/patrol_object/', 'PatrolObject'),
+                 ('/api/patrol/patrol_item/', 'PatrolItem'),
+                 ('/api/patrol/patrol_plan/', 'PatrolPlan'),
+                 ('/api/patrol/patrol_inspection/', 'PatrolInspection'),
+                 ('/api/patrol/patrol_inspection_track/', 'PatrolInspectionTrack'),
+                 ('/api/patrol/patrol_report/', 'PatrolReport'),
+                 ('/api/patrol/patrol_report_transfer/', 'PatrolReportTransfer'),
+                 ('/api/patrol/patrol_report_file/', 'PatrolReportFile'),
+                 ('/api/patrol/patrol_report_solve/', 'PatrolReportSolve'),
+                 ('/api/patrol/patrol_report_solve_file/', 'PatrolReportSolveFile')]
 
-    monitor_table_lst1 = [('/api/monitor/monitor_gnss/excel', 'MonitorGnss'), ]
+    for item in table_lst:
+        gen_android_api(item[0], item[1])
 
-    sys_book_lst = [('/api/sys/sys_book/', 'SysBook')]
+    gen_java_entity(['PatrolReportWrapper', 'PatrolReport', 'PatrolReportFile', 'MainPatrolItem', 'PatrolItem',
+                     'UploadFileResult'])
 
-    message_table_lst = [('/api/msg/msg_message/', 'MsgMessage'),
-                         ('/api/msg/msg_message_send/', 'MsgMessageSend'),
-                         ('/api/msg/msg_publisher/', 'MsgPublisher'),
-                         ('/api/msg/msg_push/', 'MsgPush'),
-                         ('/api/msg/msg_subscriber/', 'MsgSubscriber')]
 
-    video_table_lst = [('/api/video/video_group/', 'VideoGroup'),
-                       ('/api/video/video_play/', 'VideoPlay'),
-                       ('/api/video/video_play_photo/', 'VideoPlayPhoto'),
-                       ('/api/video/video_play_preset/', 'VideoPlayPreset'),
-                       ('/api/isecure/device/preview_urls', 'IsecurePreview')]
+def batch_gen_sys_table():
+    sys_table_lst = [('/api/sys/sys_book/', 'SysBook'), ('/api/sys/sys_app_update/', 'SysAppUpdate'),
+                     ('/api/sae/sae_people/', 'SaePeople'), ]
 
-    monitor_table_lst = [('/api/monitor/monitor_station/', 'MonitorStation'),
-                         ('/api/monitor/monitor_rain/', 'MonitorRain'),
-                         ('/api/monitor/monitor_rain_new/', 'MonitorRainNew'),
-                         ('/api/monitor/monitor_rain_hour/', 'MonitorRainHour'),
-                         ('/api/monitor/monitor_rain_day/', 'MonitorRainDay'),
-                         ('/api/monitor/monitor_rain_month/', 'MonitorRainMonth'),
-                         ('/api/monitor/monitor_canal/', 'MonitorCanal'),
-                         ('/api/monitor/monitor_canal_new/', 'MonitorCanalNew'),
-                         ('/api/monitor/monitor_rsvr/', 'MonitorRsvr'),
-                         ('/api/monitor/monitor_rsvr_new/', 'MonitorRsvrNew'),
-                         ('/api/monitor/monitor_wdpstat/', 'MonitorWdpstat'),
-                         ('/api/monitor/monitor_wdpstat_new/', 'MonitorWdpstatNew'),
-                         ('/api/monitor/monitor_wdpstat_hour/', 'MonitorWdpstatHour'),
-                         ('/api/monitor/monitor_wdpstat_day/', 'MonitorWdpstatDay'),
-                         ('/api/monitor/monitor_wdpstat_month/', 'MonitorWdpstatMonth'),
-                         ('/api/monitor/monitor_gate/', 'MonitorGate'),
-                         ('/api/monitor/monitor_gate_new/', 'MonitorGateNew'),
-                         ('/api/monitor/monitor_gate_log/', 'MonitorGateLog'),
-                         ('/api/monitor/monitor_meteorology/', 'MonitorMeteorology'),
-                         ('/api/monitor/monitor_meteorology_new/', 'MonitorMeteorologyNew'),
-                         ('/api/monitor/monitor_waterquality/', 'MonitorWaterquality'),
-                         ('/api/monitor/monitor_waterquality_new/', 'MonitorWaterqualityNew'),
-                         ('/api/monitor/monitor_gnss/', 'MonitorGnss'),
-                         ('/api/monitor/monitor_gnss_new/', 'MonitorGnssNew'),
-                         ('/api/monitor/monitor_tilt/', 'MonitorTilt'),
-                         ('/api/monitor/monitor_tilt_new/', 'MonitorTiltNew'),
-                         ('/api/monitor/monitor_pressure/', 'MonitorPressure'),
-                         ('/api/monitor/monitor_pressure_new/', 'MonitorPressureNew'),
-                         ('/api/monitor/monitor_flow/', 'MonitorFlow'),
-                         ('/api/monitor/monitor_flow_new/', 'MonitorFlowNew'),
-                         ('/api/monitor/warn_record/', 'WarnRecord')]
+    for item in sys_table_lst:
+        gen_android_api(item[0], item[1])
 
-    for item in video_table_lst:
+
+def batch_gen_news_table():
+    table_lst = [('/api/news/news_business_system/', 'NewsBusinessSystem'),
+                 ('/api/news/news_catalog/', 'NewsCatalog'),
+                 ('/api/news/news_publish_article/', 'NewsPublishArticle')]
+
+    for item in table_lst:
+        gen_android_api(item[0], item[1])
+
+
+def batch_gen_video_table():
+    table_lst = [('/api/video/video_group/', 'VideoGroup'),
+                 ('/api/video/video_play/', 'VideoPlay'),
+                 ('/api/video/video_play_photo/', 'VideoPlayPhoto'),
+                 ('/api/video/video_play_preset/', 'VideoPlayPreset'),
+                 ('/api/isecure/device/preview_urls', 'IsecurePreview')]
+
+    for item in table_lst:
         gen_android_api(item[0], item[1])
 
     gen_java_entity(['VideoPlayExpandPreset', 'VideoPlayGroupTreeNode'])
 
-    """
-    gen_java_entity(['PatrolReportWrapper', 'PatrolReport', 'PatrolReportFile', 'MainPatrolItem', 'PatrolItem',
-                     'UploadFileResult'])
-    
+
+def batch_gen_monitor_table():
+    table_lst = [('/api/monitor/monitor_station/', 'MonitorStation'),
+                 ('/api/monitor/monitor_rain/', 'MonitorRain'),
+                 ('/api/monitor/monitor_rain_new/', 'MonitorRainNew'),
+                 ('/api/monitor/monitor_rain_hour/', 'MonitorRainHour'),
+                 ('/api/monitor/monitor_rain_day/', 'MonitorRainDay'),
+                 ('/api/monitor/monitor_rain_month/', 'MonitorRainMonth'),
+                 ('/api/monitor/monitor_canal/', 'MonitorCanal'),
+                 ('/api/monitor/monitor_canal_new/', 'MonitorCanalNew'),
+                 ('/api/monitor/monitor_rsvr/', 'MonitorRsvr'),
+                 ('/api/monitor/monitor_rsvr_new/', 'MonitorRsvrNew'),
+                 ('/api/monitor/monitor_wdpstat/', 'MonitorWdpstat'),
+                 ('/api/monitor/monitor_wdpstat_new/', 'MonitorWdpstatNew'),
+                 ('/api/monitor/monitor_wdpstat_hour/', 'MonitorWdpstatHour'),
+                 ('/api/monitor/monitor_wdpstat_day/', 'MonitorWdpstatDay'),
+                 ('/api/monitor/monitor_wdpstat_month/', 'MonitorWdpstatMonth'),
+                 ('/api/monitor/monitor_gate/', 'MonitorGate'),
+                 ('/api/monitor/monitor_gate_new/', 'MonitorGateNew'),
+                 ('/api/monitor/monitor_gate_log/', 'MonitorGateLog'),
+                 ('/api/monitor/monitor_meteorology/', 'MonitorMeteorology'),
+                 ('/api/monitor/monitor_meteorology_new/', 'MonitorMeteorologyNew'),
+                 ('/api/monitor/monitor_waterquality/', 'MonitorWaterquality'),
+                 ('/api/monitor/monitor_waterquality_new/', 'MonitorWaterqualityNew'),
+                 ('/api/monitor/monitor_gnss/', 'MonitorGnss'),
+                 ('/api/monitor/monitor_gnss_new/', 'MonitorGnssNew'),
+                 ('/api/monitor/monitor_tilt/', 'MonitorTilt'),
+                 ('/api/monitor/monitor_tilt_new/', 'MonitorTiltNew'),
+                 ('/api/monitor/monitor_pressure/', 'MonitorPressure'),
+                 ('/api/monitor/monitor_pressure_new/', 'MonitorPressureNew'),
+                 ('/api/monitor/monitor_flow/', 'MonitorFlow'),
+                 ('/api/monitor/monitor_flow_new/', 'MonitorFlowNew'),
+                 ('/api/monitor/warn_record/', 'WarnRecord')]
+
+    for item in table_lst:
+        gen_android_api(item[0], item[1])
 
     gen_java_entity(['MonitorCanalGroupStation', 'MonitorRsvrDownwaterCapacity',
                      'MonitorRsvrDownwaterOverview', 'WarnRecordAll', 'WaterqualityQualified', 'MonitorGateNewAll'])
-    """
 
 
 if __name__ == '__main__':
-    batch_gen_android_repo()
+    # batch_gen_patrol_table()
+    # batch_gen_sys_table()
+    # batch_gen_news_table()
+    # batch_gen_video_table()
+    batch_gen_monitor_table()
