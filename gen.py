@@ -10,10 +10,10 @@ base_dir = os.path.dirname(__file__)
 template_dir = os.path.join(base_dir, 'templates')
 root_dir = os.path.join(base_dir, 'output')
 
-swagger_url = 'http://192.168.102.40:9900/api/doc/swagger.json'
+swagger_url = 'http://192.168.50.136:9900/api/doc/swagger.json'
 root_name = 'cn.linkeddt.wisdomwatersystem'
 app_name = 'irrms'
-package_name = 'monitor'
+package_name = 'video'
 
 
 def gen_java_entity(schema_name_list):
@@ -129,6 +129,18 @@ def batch_gen_android_repo():
 
     sys_book_lst = [('/api/sys/sys_book/', 'SysBook')]
 
+    message_table_lst = [('/api/msg/msg_message/', 'MsgMessage'),
+                         ('/api/msg/msg_message_send/', 'MsgMessageSend'),
+                         ('/api/msg/msg_publisher/', 'MsgPublisher'),
+                         ('/api/msg/msg_push/', 'MsgPush'),
+                         ('/api/msg/msg_subscriber/', 'MsgSubscriber')]
+
+    video_table_lst = [('/api/video/video_group/', 'VideoGroup'),
+                       ('/api/video/video_play/', 'VideoPlay'),
+                       ('/api/video/video_play_photo/', 'VideoPlayPhoto'),
+                       ('/api/video/video_play_preset/', 'VideoPlayPreset'),
+                       ('/api/isecure/device/preview_urls', 'IsecurePreview')]
+
     monitor_table_lst = [('/api/monitor/monitor_station/', 'MonitorStation'),
                          ('/api/monitor/monitor_rain/', 'MonitorRain'),
                          ('/api/monitor/monitor_rain_new/', 'MonitorRainNew'),
@@ -161,16 +173,19 @@ def batch_gen_android_repo():
                          ('/api/monitor/monitor_flow_new/', 'MonitorFlowNew'),
                          ('/api/monitor/warn_record/', 'WarnRecord')]
 
-    for item in monitor_table_lst:
+    for item in video_table_lst:
         gen_android_api(item[0], item[1])
+
+    gen_java_entity(['VideoPlayExpandPreset', 'VideoPlayGroupTreeNode'])
 
     """
     gen_java_entity(['PatrolReportWrapper', 'PatrolReport', 'PatrolReportFile', 'MainPatrolItem', 'PatrolItem',
                      'UploadFileResult'])
-    """
+    
 
     gen_java_entity(['MonitorCanalGroupStation', 'MonitorRsvrDownwaterCapacity',
                      'MonitorRsvrDownwaterOverview', 'WarnRecordAll', 'WaterqualityQualified', 'MonitorGateNewAll'])
+    """
 
 
 if __name__ == '__main__':
